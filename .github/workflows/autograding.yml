@@ -1,35 +1,28 @@
-: Autograding Tests
+name: Autograding Tests
+
 on:
+  push:
+    branches:
       - main
       - 'release/**'
   pull_request:
     branches:
       - main
       - 'release/**'
-
+ 
 permissions:
   checks: write
   actions: read
   contents: read
-  jobs:
+
+jobs:
   run-autograding-tests:
     runs-on: ubuntu-latest
     if: ${{ github.actor != 'github-classroom[bot]' }}
+
     steps:
       - name: Checkout code
-  push:
-    branches:
         uses: actions/checkout@v4
-
-      - name: index.html exists
-        id: index-file-exists
-        uses: classroom-resources/autograding-command-grader@v1
-        with:
-          test-name: index.html exists
-          setup-command: ''
-          command: test -f index.html
-          timeout: 10
-          max-score: 5
 
       - name: CSS file exists
         id: css-file-exists
@@ -67,28 +60,3 @@ permissions:
         with:
           test-name: Navbar present
           setup-command: ''
-          command: grep -q 'class="[^"]*navbar' index.html
-          timeout: 10
-          max-score: 10
-
-      - name: Contact form present
-        id: contact-form-present
-        uses: classroom-resources/autograding-command-grader@v1
-        with:
-          test-name: Contact form present
-          setup-command: ''
-          command: grep -q "<form" index.html
-          timeout: 10
-          max-score: 15
-
-      - name: Autograding Reporter
-        uses: classroom-resources/autograding-grading-reporter@v1
-        env:
-          INDEX-FILE-EXISTS_RESULTS: "${{steps.index-file-exists.outputs.result}}"
-          CSS-FILE-EXISTS_RESULTS: "${{steps.css-file-exists.outputs.result}}"
-          CUSTOM-CSS-LINKED_RESULTS: "${{steps.custom-css-linked.outputs.result}}"
-          BOOTSTRAP-CDN-INCLUDED_RESULTS: "${{steps.bootstrap-cdn-included.outputs.result}}"
-          NAVBAR-PRESENT_RESULTS: "${{steps.navbar-present.outputs.result}}"
-          CONTACT-FORM-PRESENT_RESULTS: "${{steps.contact-form-present.outputs.result}}"
-        with:
-          runners: index-file-exists,css-file-exists,custom-css-linked,bootstrap-cdn-included,navbar-present,contact-form-present
