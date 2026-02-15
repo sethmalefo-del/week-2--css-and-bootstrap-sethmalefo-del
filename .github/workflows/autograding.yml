@@ -1,7 +1,5 @@
 : Autograding Tests
 on:
-  push:
-    branches:
       - main
       - 'release/**'
   pull_request:
@@ -19,6 +17,8 @@ permissions:
     if: ${{ github.actor != 'github-classroom[bot]' }}
     steps:
       - name: Checkout code
+  push:
+    branches:
         uses: actions/checkout@v4
 
       - name: index.html exists
