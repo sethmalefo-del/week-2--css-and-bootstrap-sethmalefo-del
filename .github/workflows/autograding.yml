@@ -1,5 +1,4 @@
 name: Autograding Tests
-
 on:
   push:
     branches:
