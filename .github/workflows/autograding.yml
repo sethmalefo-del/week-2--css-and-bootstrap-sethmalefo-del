@@ -1,4 +1,5 @@
 name: Autograding Tests
+
 on:
   push:
     branches:
@@ -59,3 +60,28 @@ jobs:
         with:
           test-name: Navbar present
           setup-command: ''
+          command: grep -q 'class="[^"]*navbar' index.html
+          timeout: 10
+          max-score: 10
+
+      - name: Contact form present
+        id: contact-form-present
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Contact form present
+          setup-command: ''
+          command: grep -q "<form" index.html
+          timeout: 10
+          max-score: 20
+
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          CSS-FILE-EXISTS_RESULTS: "${{ steps.css-file-exists.outputs.result }}"
+          CUSTOM-CSS-LINKED_RESULTS: "${{ steps.custom-css-linked.outputs.result }}"
+          BOOTSTRAP-CDN-INCLUDED_RESULTS: "${{ steps.bootstrap-cdn-included.outputs.result }}"
+          NAVBAR-PRESENT_RESULTS: "${{ steps.navbar-present.outputs.result }}"
+          CONTACT-FORM-PRESENT_RESULTS: "${{ steps.contact-form-present.outputs.result }}"
+        with:
+          runners: css-file-exists,custom-css-linked,bootstrap-cdn-included,navbar-present,contact-form-present
+
