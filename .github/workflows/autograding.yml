@@ -1,5 +1,4 @@
-yaml
-name: Autograding Tests
+: Autograding Tests
 on:
       - main
       - 'release/**'
