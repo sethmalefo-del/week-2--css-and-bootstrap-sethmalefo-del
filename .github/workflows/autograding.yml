@@ -84,4 +84,7 @@ jobs:
           CONTACT-FORM-PRESENT_RESULTS: "${{ steps.contact-form-present.outputs.result }}"
         with:
           runners: css-file-exists,custom-css-linked,bootstrap-cdn-included,navbar-present,contact-form-present
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
